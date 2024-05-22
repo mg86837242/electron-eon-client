@@ -1,0 +1,58 @@
+{
+  "name": "electron-eon-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "lint": "eslint . --max-warnings 50",
+    "lint:fix": "eslint . --max-warnings 50 --fix",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,css,md}": [
+      "prettier --write --ignore-unknown"
+    ]
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fontsource/inter": "^5.0.18",
+    "@hookform/resolvers": "^3.4.0",
+    "@mui/icons-material": "^5.15.18",
+    "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/material": "^5.15.18",
+    "@tanstack/react-query": "^5.36.2",
+    "axios": "^1.6.8",
+    "jwt-decode": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.51.4",
+    "react-router-dom": "^6.23.1",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.3.0",
+    "@tanstack/eslint-plugin-query": "^5.35.6",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.6.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "globals": "^15.2.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "3.2.5",
+    "vite": "^5.2.11",
+    "vite-plugin-svgr": "^4.2.0"
+  }
+}
