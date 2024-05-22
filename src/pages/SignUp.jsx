@@ -206,6 +206,7 @@ export default function SignUp() {
                 label='I want to receive inspiration, marketing promotions and updates via email.'
               />
             </Grid>
+            {/* FIXME use MUI snackbar(s) here */}
             {isError && (
               <Grid xs={12} display='flex' justifyContent='center'>
                 <Typography component='p' variant='body1' color='error.main'>

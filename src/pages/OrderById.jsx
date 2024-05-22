@@ -8,6 +8,7 @@ import useAuthStore from '../store/useAuthStore';
 import capFirst from '../utils/capFirst';
 
 export default function OrderById() {
+  // FIXME optimistic rendering based on store, but fetch the actual data by using `useParams`
   const {
     id,
     city,
