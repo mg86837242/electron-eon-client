@@ -128,6 +128,30 @@ export default function CheckoutPage() {
     }
   }
 
+  function getPrevBtnAriaLabel(step) {
+    switch (step) {
+      case 1:
+        return 'button to go to the previous step of checkout, which involves filling in name and address details';
+      case 2:
+        return 'button to go to the previous step of checkout, which involves filling in payment details';
+      default:
+        throw new Error('Unknown step');
+    }
+  }
+
+  function getNextBtnAriaLabel(step) {
+    switch (step) {
+      case 0:
+        return 'button to go to the next step of checkout, which involves filling in payment details';
+      case 1:
+        return 'button to go to the next step of checkout, which involves reviewing all order details';
+      case 2:
+        return 'button to submit and place the order';
+      default:
+        throw new Error('Unknown step');
+    }
+  }
+
   return (
     <>
       <Grid container sx={{ height: { xs: '100%', sm: '100dvh' } }}>
@@ -225,12 +249,7 @@ export default function CheckoutPage() {
                 onClick={() => navigate('/cart')}
               >
                 Back to
-                <img
-                  src={logo}
-                  style={logoStyle}
-                  alt='Logo of the website'
-                  onClick={() => navigate(-1)}
-                />
+                <img src={logo} style={logoStyle} alt='Logo of the website' />
               </Button>
               <ToggleColorMode
                 mode={colorMode}
@@ -337,8 +356,8 @@ export default function CheckoutPage() {
                 <Typography variant='h5'>Thank you for your order!</Typography>
                 <Typography variant='body1' color='text.secondary'>
                   Your order number is
-                  <strong>&nbsp;#140396</strong>. We have emailed your order
-                  confirmation and will update you once its shipped.
+                  <strong>&nbsp;{orderResponseId}</strong>. We have emailed your
+                  order confirmation and will update you once its shipped.
                 </Typography>
                 <Button
                   variant='contained'
@@ -371,11 +390,12 @@ export default function CheckoutPage() {
                   {activeStep !== 0 && (
                     <Button
                       startIcon={<ChevronLeftRoundedIcon />}
-                      onClick={handleBack}
                       variant='text'
+                      aria-label={getPrevBtnAriaLabel(activeStep)}
                       sx={{
                         display: { xs: 'none', sm: 'flex' },
                       }}
+                      onClick={handleBack}
                     >
                       Previous
                     </Button>
@@ -384,12 +404,13 @@ export default function CheckoutPage() {
                   {activeStep !== 0 && (
                     <Button
                       startIcon={<ChevronLeftRoundedIcon />}
-                      onClick={handleBack}
                       variant='outlined'
                       fullWidth
+                      aria-label={getPrevBtnAriaLabel(activeStep)}
                       sx={{
                         display: { xs: 'flex', sm: 'none' },
                       }}
+                      onClick={handleBack}
                     >
                       Previous
                     </Button>
@@ -398,10 +419,11 @@ export default function CheckoutPage() {
                   <Button
                     variant='contained'
                     endIcon={<ChevronRightRoundedIcon />}
-                    onClick={handleNext}
+                    aria-label={getNextBtnAriaLabel(activeStep)}
                     sx={{
                       width: { xs: '100%', sm: 'fit-content' },
                     }}
+                    onClick={handleNext}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                   </Button>
