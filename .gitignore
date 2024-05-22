@@ -24,8 +24,8 @@ dist-ssr
 *.sw?
 
 # Customized
+__*
 .env
 .env.production
 *.pem
-__*
 ecosystem.
