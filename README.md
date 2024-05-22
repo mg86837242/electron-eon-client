@@ -94,12 +94,12 @@ products, including smartphones, laptops, home appliances, and more.
         Hibernate
       - Object Pool incorporated into HikariCP, which the default
         option adopted by Spring Boot
-        - Builder for Entity classes and DTOs (Data Transfer Objects)
+      - Builder for Entity classes and DTOs (Data Transfer Objects)
       - Decorator for implementing UserDetails interface
-        - Composite design pattern integrated into React
-        - Observer design pattern incorporated into React, e.g., passing
-          props and useEffect hook
-        - State design pattern adopted and heavily utilized by React
+      - Composite design pattern integrated into React
+      - Observer design pattern incorporated into React, e.g., passing
+        props and useEffect hook
+      - State design pattern adopted and heavily utilized by React
     - Other design patterns
       - MVC for the designing the web application
       - DAO design pattern in Java
@@ -108,7 +108,7 @@ products, including smartphones, laptops, home appliances, and more.
   - Overview of technology stack
 - Code implementation:
   - Demonstration of functionalities mentioned in Functional Requirements
-  - Logging framework - log4j2
+  - Logging framework - slf4j
   - Source control - Git
   - Validation and authentication
   - TDD and appropriate coverage - JUnit5 and Mockito

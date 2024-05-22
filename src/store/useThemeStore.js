@@ -11,7 +11,7 @@ const useThemeStore = create(
         : 'light';
 
       return {
-        // The initial value `preferredColorMode` will be short-circuited if the `colorMode` state has been updated by an action (e.g., the toggle handler), as the persist middleware first evaluates the state persisted in the `localStorage`
+        // The initial value `preferredColorMode` will be short-circuited if the `colorMode` state has been updated by any action (e.g., the toggle handler), as the persist middleware first evaluates the state persisted in the `localStorage`
         colorMode: preferredColorMode,
         toggleColorMode: () =>
           set({ colorMode: get().colorMode === 'light' ? 'dark' : 'light' }),

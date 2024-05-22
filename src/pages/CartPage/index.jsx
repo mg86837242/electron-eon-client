@@ -31,7 +31,7 @@ export default function CartTable() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { data: carts } = useQuery({
+  const { data: cartItems } = useQuery({
     queryKey: ['getCartsForCurrUser'],
     queryFn: getCartsForCurrUser,
   });
@@ -119,7 +119,7 @@ export default function CartTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {carts
+            {cartItems
               ?.toSorted((a, b) => {
                 const aName = a.product?.name ?? '';
                 const bName = b.product?.name ?? '';
@@ -189,7 +189,7 @@ export default function CartTable() {
         variant='contained'
         aria-label='button to proceed to the checkout page'
         sx={{ mt: 3, mb: 2 }}
-        disabled={carts && !carts?.length}
+        disabled={!cartItems?.length}
         onClick={() => navigate('/checkout', { state: { from: location } })}
       >
         Checkout

@@ -16,6 +16,7 @@ export default function OrderById() {
     orderProducts,
     createdAt,
   } = useAuthStore(state => state.orderResponse);
+
   const totalPrice = orderProducts
     ?.reduce((acc, cv) => acc + cv?.product?.price * cv?.quantity, 0)
     .toFixed(2);

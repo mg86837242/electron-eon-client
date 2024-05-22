@@ -4,7 +4,7 @@ import { BASE_URL } from '../data/constants';
 import useAuthentication from '../hooks/useAuthentication';
 
 const createAuthSlice = (set, get) => ({
-  // The initial value empty str will be short-circuited if the `token` state has been updated by an action (e.g., `updateToken`), as the persist middleware first evaluates the state persisted in the `localStorage`
+  // The initial value empty str will be short-circuited if the `token` state has been updated by any action (e.g., `updateToken`), as the persist middleware first evaluates the state persisted in the `localStorage`
   token: '',
   authUser: null,
   isAuthUserLoading: true,
@@ -39,9 +39,10 @@ const createAuthSlice = (set, get) => ({
 
     set({ authUser: await response.data });
   },
-  updateToken: token => set({ token }),
-  updateAuthUser: authUser => set({ authUser }),
-  updateAuthUserLoading: isAuthUserLoading => set({ isAuthUserLoading }),
+  updateToken: newToken => set({ token: newToken }),
+  updateAuthUser: newAuthUser => set({ authUser: newAuthUser }),
+  updateAuthUserLoading: newIsAuthUserLoading =>
+    set({ isAuthUserLoading: newIsAuthUserLoading }),
 });
 
 export default createAuthSlice;

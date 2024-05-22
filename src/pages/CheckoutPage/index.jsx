@@ -50,7 +50,7 @@ export default function CheckoutPage() {
   );
   const updateOrderResponse = useAuthStore(state => state.updateOrderResponse);
 
-  // No navbar (which contains the logic to validate token) in this page, so need to validate here
+  // The navbar (which contains the logic to validate token) is not rendered on this page, so need to validate here
   React.useEffect(() => {
     if (!token) {
       updateIsAuthUserLoading(false);

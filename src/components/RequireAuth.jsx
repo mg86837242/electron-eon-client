@@ -46,7 +46,7 @@ RequireAuth.propTypes = {
 // -- alternatively, use a `loadingElapsed` state to delay the evaluation of `canAccess`, and render a spinner while
 //    timed out (Effect hook + `setTimeout`); this can also work in conjunction with the curr solution
 // -- another alternative is to use TSQ to fetch token and authenticated user, so that I don't need to code
-//    `isAuthUserLoading` and even error-related states myself => // TODO debate is needed whether or not to `POST /auth/login` and `GET /auth/me` in store or in custom hooks wrapping TSQ's `useMutation` and `useQuery` hooks; I've also seen ppl putting event handlers in store; taking it to another extreme, it's also debatable if I should manage all the global auth states by using TSQ since they're server-side states
+//    `isAuthUserLoading` and even error-related states myself => // TODO debate is needed whether or not to `POST /auth/login` and `GET /auth/me` in store or in custom hook (fetching part will be managed by TSQ); I've also seen ppl putting event handlers in store (but for this approach, a custom hook incl. an Effect hook to sync with the token state and persisted token is still needed); taking it to another extreme, all the global auth states can be managed by TSQ since they're server-side states
 //
 // -- cond providing router: https://stackoverflow.com/questions/62384395/protected-route-with-react-router-v6/64347082#64347082
 //    => not recommended => "I would create a single route with all router, then in the loader of the routes I would
