@@ -207,6 +207,7 @@ export default function SignUp() {
               />
             </Grid>
             {/* FIXME use MUI snackbar(s) here */}
+            {/* test config */}
             {isError && (
               <Grid xs={12} display='flex' justifyContent='center'>
                 <Typography component='p' variant='body1' color='error.main'>
