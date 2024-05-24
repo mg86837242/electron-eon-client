@@ -19,6 +19,11 @@ import useAuthentication from '../hooks/useAuthentication';
 import loginSchema from '../schemas/loginSchema';
 
 export default function SignInSide() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/';
+
   const { loginError, handleLogin } = useAuthentication();
   const {
     control,
@@ -29,10 +34,6 @@ export default function SignInSide() {
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   });
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const from = location.state?.from?.pathname || '/';
 
   const onSubmit = data => {
     handleLogin(data.email, data.password, () =>

@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import LoadingButton from '@mui/lab/LoadingButton';
+import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from '@mui/material/Link';
+import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -18,9 +20,10 @@ import { useMutation } from '@tanstack/react-query';
 import { registerUser } from '../api';
 import { AuthFooter } from '../components';
 import registerSchema from '../schemas/registerSchema';
-import sleep from '../utils/sleep';
 
 export default function SignUp() {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const {
@@ -40,19 +43,36 @@ export default function SignUp() {
 
   const {
     mutate,
-    error: mutError,
-    isPending,
+    error: registerError,
     isError,
-    isSuccess,
   } = useMutation({
     mutationFn: registerUser,
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSuccess: () => {
+      setOpen(true);
+
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate('/', { replace: true });
+      }, 5_000);
+    },
+    onError: () => {
+      setIsLoading(false);
+    },
   });
 
   const onSubmit = async data => {
     mutate(data);
+  };
 
-    await sleep(3_000);
-    navigate('/', { replace: true });
+  const handleClose = (_event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -206,18 +226,11 @@ export default function SignUp() {
                 label='I want to receive inspiration, marketing promotions and updates via email.'
               />
             </Grid>
-            {/* FIXME use MUI snackbar(s) here */}
             {isError && (
               <Grid xs={12} display='flex' justifyContent='center'>
                 <Typography component='p' variant='body1' color='error.main'>
-                  {mutError?.response?.data?.message || 'An error occurred'}
-                </Typography>
-              </Grid>
-            )}
-            {isSuccess && (
-              <Grid xs={12} display='flex' justifyContent='center'>
-                <Typography component='p' variant='body1' color='success.main'>
-                  Registration successful!
+                  {registerError?.response?.data?.message ||
+                    'An error occurred'}
                 </Typography>
               </Grid>
             )}
@@ -227,11 +240,26 @@ export default function SignUp() {
             fullWidth
             variant='contained'
             sx={{ mt: 3, mb: 2 }}
-            loading={isPending}
+            loading={isLoading}
             loadingIndicator='Pending...'
           >
             Sign Up
           </LoadingButton>
+          <Snackbar
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            open={open}
+            autoHideDuration={5_000}
+            onClose={handleClose}
+          >
+            <Alert
+              onClose={handleClose}
+              severity='success'
+              variant='filled'
+              sx={{ width: '100%' }}
+            >
+              Registration successful
+            </Alert>
+          </Snackbar>
           <Grid container justifyContent='flex-end'>
             <Grid>
               <Link
