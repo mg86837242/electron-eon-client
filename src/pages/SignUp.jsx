@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useMutation } from '@tanstack/react-query';
+import PropTypes from 'prop-types';
 
 import { registerUser } from '../api';
 import { AuthFooter } from '../components';
@@ -54,6 +55,21 @@ function ControlledTextField({
     />
   );
 }
+
+ControlledTextField.propTypes = {
+  name: PropTypes.string.isRequired,
+  control: PropTypes.object.isRequired,
+  label: PropTypes.string.isRequired,
+  autoComplete: PropTypes.string,
+  type: PropTypes.string,
+  autoFocus: PropTypes.bool,
+};
+
+ControlledTextField.defaultProps = {
+  autoComplete: '',
+  type: 'text',
+  autoFocus: false,
+};
 
 export default function SignUp() {
   const [isLoading, setIsLoading] = React.useState(false);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useController, Controller, useForm } from 'react-hook-form';
+import { useController, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
+import PropTypes from 'prop-types';
 
 import { AuthFooter } from '../components';
 import useAuthentication from '../hooks/useAuthentication';
@@ -53,6 +54,22 @@ function ControlledTextField({
     />
   );
 }
+
+ControlledTextField.propTypes = {
+  name: PropTypes.string.isRequired,
+  control: PropTypes.object.isRequired,
+  loginError: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  autoComplete: PropTypes.string,
+  type: PropTypes.string,
+  autoFocus: PropTypes.bool,
+};
+
+ControlledTextField.defaultProps = {
+  autoComplete: '',
+  type: 'text',
+  autoFocus: false,
+};
 
 export default function SignInSide() {
   const navigate = useNavigate();
