@@ -24,7 +24,7 @@ const payments = [
 export default function Review({ cartItems, formData }) {
   const totalPrice = cartItems
     ?.reduce((acc, cv) => acc + cv?.product?.price * cv?.quantity, 0)
-    .toFixed(2);
+    ?.toFixed(2);
 
   return (
     <Stack spacing={2}>

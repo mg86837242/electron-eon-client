@@ -6,8 +6,8 @@ export const getAllProdsForCurrUser = async () => {
   return response.data;
 };
 
-export const getProdByIdForCurrUser = async productId => {
-  const response = await api.get(`${BASE_URL}/customer/products/${productId}`);
+export const getProdByIdForCurrUser = async id => {
+  const response = await api.get(`${BASE_URL}/customer/products/${id}`);
   return response.data;
 };
 

@@ -6,8 +6,8 @@ export const getAllProducts = async () => {
   return response.data;
 };
 
-export const getProductById = async productId => {
-  const response = await api.get(`${BASE_URL}/products/${productId}`);
+export const getProductById = async id => {
+  const response = await api.get(`${BASE_URL}/products/${id}`);
   return response.data;
 };
 

@@ -54,5 +54,6 @@ RequireAuth.propTypes = {
 //    route) or redirect (if the user can know that exists but it doesn’t have access)", by Sergio
 
 // References for passing ctx (e.g., role info) to the loader
-// -- The official proposal of middleware feature to help passing the ctx to the loader:
-//    https://github.com/remix-run/react-router/discussions/9564:
+// -- the official proposal of middleware feature to help passing the ctx to the loader:
+//    https://github.com/remix-run/react-router/discussions/9564
+// -- unstable middleware as of May 2024: https://reactrouter.com/en/main/routers/create-browser-router#middleware

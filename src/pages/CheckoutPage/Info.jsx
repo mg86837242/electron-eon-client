@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 export default function Info({ cartItems }) {
   const totalPrice = cartItems
     ?.reduce((acc, cv) => acc + cv?.product?.price * cv?.quantity, 0)
-    .toFixed(2);
+    ?.toFixed(2);
 
   return (
     <>
