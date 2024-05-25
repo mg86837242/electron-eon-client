@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useController, Controller, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -18,22 +18,53 @@ import { AuthFooter } from '../components';
 import useAuthentication from '../hooks/useAuthentication';
 import loginSchema from '../schemas/loginSchema';
 
+function ControlledTextField({
+  name,
+  control,
+  loginError,
+  label,
+  autoComplete,
+  type = 'text',
+  autoFocus = false,
+}) {
+  const {
+    field: { ref, ...inputProps },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+  });
+
+  return (
+    <TextField
+      {...inputProps}
+      inputRef={ref}
+      error={!!error || !!loginError}
+      helperText={error?.message || loginError || ''}
+      required
+      fullWidth
+      id={`sign-in-${name}`}
+      label={label}
+      autoComplete={autoComplete}
+      type={type}
+      autoFocus={autoFocus}
+      variant='filled'
+      margin='normal'
+    />
+  );
+}
+
 export default function SignInSide() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const from = location.state?.from?.pathname || '/';
-
   const { loginError, handleLogin } = useAuthentication();
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    trigger,
-  } = useForm({
+
+  const { control, handleSubmit } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   });
+
+  const from = location.state?.from?.pathname || '/';
 
   const onSubmit = data => {
     handleLogin(data.email, data.password, () =>
@@ -86,57 +117,21 @@ export default function SignInSide() {
               },
             }}
           >
-            <Controller
+            <ControlledTextField
               name='email'
               control={control}
-              render={({ field: { name, value, ref, onChange, onBlur } }) => (
-                <TextField
-                  name={name}
-                  value={value}
-                  inputRef={ref}
-                  onChange={e => {
-                    onChange(e);
-                    trigger('email');
-                  }}
-                  onBlur={onBlur}
-                  error={!!errors.email || !!loginError}
-                  helperText={errors.email?.message || loginError}
-                  margin='normal'
-                  required
-                  fullWidth
-                  id='sign-in-email'
-                  label='Email Address'
-                  autoComplete='email'
-                  autoFocus
-                  variant='filled'
-                />
-              )}
+              loginError={loginError}
+              label='Email Address'
+              autoComplete='email'
+              autoFocus
             />
-            <Controller
+            <ControlledTextField
               name='password'
               control={control}
-              render={({ field: { name, value, ref, onChange, onBlur } }) => (
-                <TextField
-                  name={name}
-                  value={value}
-                  inputRef={ref}
-                  onChange={e => {
-                    onChange(e);
-                    trigger('password');
-                  }}
-                  onBlur={onBlur}
-                  error={!!errors.password || !!loginError}
-                  helperText={errors.password?.message || loginError}
-                  margin='normal'
-                  required
-                  fullWidth
-                  id='sign-in-password'
-                  label='Password'
-                  type='password'
-                  autoComplete='current-password'
-                  variant='filled'
-                />
-              )}
+              loginError={loginError}
+              label='Password'
+              type='password'
+              autoComplete='new-password'
             />
             <FormControlLabel
               control={<Checkbox value='remember' color='primary' />}

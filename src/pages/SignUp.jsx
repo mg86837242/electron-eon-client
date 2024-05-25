@@ -24,7 +24,6 @@ import registerSchema from '../schemas/registerSchema';
 function ControlledTextField({
   name,
   control,
-  setValue,
   label,
   autoComplete,
   type = 'text',
@@ -42,15 +41,8 @@ function ControlledTextField({
     <TextField
       {...inputProps}
       inputRef={ref}
-      // ??? Using `trigger` returned by `useForm`, then passing down `trigger` and adding `trigger(${name})` to each
-      //  <TextField>  would cause all fields to re-render when updating one field, despite using `trigger(${name})`
-      //  according to the docs => https://github.com/react-hook-form/react-hook-form/issues/1108: adding `mode:
-      //  'onChange'` option to the `useForm`, then passing down the returned `setValue` and adding `onChange={e =>
-      //  { inputProps.onChange(e); setValue(name, e.target.value, { shouldValidate: true }); }}` to the `onChange` prop
-      //  of <TextField> => somehow solve the issue => but removing everything related `setValue`, everything still
-      //  works fine
       error={!!error}
-      helperText={error ? error.message : ''}
+      helperText={error?.message || ''}
       required
       fullWidth
       id={`register-${name}`}
@@ -68,7 +60,7 @@ export default function SignUp() {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
-  const { control, handleSubmit, setValue } = useForm({
+  const { control, handleSubmit } = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       firstName: '',
@@ -149,9 +141,7 @@ export default function SignUp() {
               <ControlledTextField
                 name='firstName'
                 control={control}
-                setValue={setValue}
-                // label='First Name'
-                label={`First Name ${Math.random()}`}
+                label='First Name'
                 autoComplete='given-name'
                 autoFocus
               />
@@ -160,9 +150,7 @@ export default function SignUp() {
               <ControlledTextField
                 name='lastName'
                 control={control}
-                setValue={setValue}
-                // label='Last Name'
-                label={`Last Name ${Math.random()}`}
+                label='Last Name'
                 autoComplete='family-name'
               />
             </Grid>
@@ -170,9 +158,7 @@ export default function SignUp() {
               <ControlledTextField
                 name='email'
                 control={control}
-                setValue={setValue}
-                // label='Email Address'
-                label={`Email Address ${Math.random()}`}
+                label='Email Address'
                 autoComplete='email'
               />
             </Grid>
@@ -180,9 +166,7 @@ export default function SignUp() {
               <ControlledTextField
                 name='password'
                 control={control}
-                setValue={setValue}
-                // label='Password'
-                label={`Password ${Math.random()}`}
+                label='Password'
                 type='password'
                 autoComplete='new-password'
               />
@@ -191,7 +175,7 @@ export default function SignUp() {
               <FormControlLabel
                 sx={{
                   mr: 0,
-                  // // ??? For some reason, the following customization doesn't work, despite aligning with: https://mui.com/material-ui/customization/how-to-customize/#overriding-nested-component-styles
+                  // ??? For some reason, the following customization doesn't work, despite aligning with: https://mui.com/material-ui/customization/how-to-customize/#overriding-nested-component-styles
                   // '.MuiGrid-root > .MuiFormControlLabel-root': {
                   //   marginRight: 0,
                   // },
@@ -253,11 +237,15 @@ export default function SignUp() {
 }
 
 // Reference:
-// -- need validation on change => use `useForm`'s `mode` option and `register` since it actually works w/ MUI:
-//    https://www.youtube.com/watch?v=sD9fZxMO1us => however, it's not recommended by neither MUI docs nor RHF docs
-// -- need validation on change with <Controller> or `useController => use `trigger` returned by `useForm` to "manually
-//    triggers form or input validation": https://old.reddit.com/r/reactjs/comments/18lcv5a/ => not recommended b/c
-//    updating one field will cause all fields to be updated as well, despite using `trigger(${name})` according to the
-//    docs: https://react-hook-form.com/docs/useform/trigger =>
-//    https://github.com/react-hook-form/react-hook-form/issues/1108
 // -- email regex pattern: https://stackoverflow.com/questions/201323/ => linter error => use schema validation
+// -- need validation on change => `useForm`'s `mode` option and `register` since it actually works w/ MUI:
+//    https://www.youtube.com/watch?v=sD9fZxMO1us => not recommended by MUI docs nor RHF docs
+// -- need validation on change with <Controller> or `useController => use `trigger` returned by `useForm`:
+//    https://old.reddit.com/r/reactjs/comments/18lcv5a/ => use `trigger`returned by `useForm`, then pass down `trigger`
+//    and add `trigger(${name})` to each <TextField> => updating one field causes all fields to be re-rendered as well,
+//    despite using `trigger(${name})` according to the docs: https://react-hook-form.com/docs/useform/trigger =>
+//    ??? https://github.com/react-hook-form/react-hook-form/issues/1108: incl. `mode: 'onChange'` option for `useForm`,
+//    then pass down the returned `setValue` and add `onChange={e => { inputProps.onChange(e); setValue(name, e.target.
+//    value, { shouldValidate: true }); }}` to the `onChange` prop of each <TextField> => solve the issue => somehow
+//    the validation on change still works as intended without all fields re-rendered after removing anything related to
+//    `setValue`
