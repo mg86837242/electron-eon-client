@@ -112,20 +112,20 @@ export default function Review({ cartItems, formData }) {
   );
 }
 
-const productPropTypes = PropTypes.shape({
-  id: PropTypes.string,
-  name: PropTypes.string,
-  description: PropTypes.string,
-  category: PropTypes.string,
-  price: PropTypes.number,
-});
-
 const userPropTypes = PropTypes.shape({
   id: PropTypes.string,
   email: PropTypes.string,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   role: PropTypes.string,
+});
+
+const productPropTypes = PropTypes.shape({
+  id: PropTypes.string,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  price: PropTypes.number,
+  category: PropTypes.string,
 });
 
 const cartItemPropTypes = PropTypes.shape({

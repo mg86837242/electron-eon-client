@@ -53,27 +53,27 @@ export default function Info({ cartItems }) {
   );
 }
 
-const productPropTypes = PropTypes.shape({
-  id: PropTypes.string,
-  category: PropTypes.string,
-  description: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  quantity: PropTypes.number,
-});
-
 const userPropTypes = PropTypes.shape({
+  id: PropTypes.string,
   email: PropTypes.string,
   firstName: PropTypes.string,
-  id: PropTypes.string,
   lastName: PropTypes.string,
   role: PropTypes.string,
 });
 
+const productPropTypes = PropTypes.shape({
+  id: PropTypes.string,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  price: PropTypes.number,
+  category: PropTypes.string,
+});
+
 const cartItemPropTypes = PropTypes.shape({
   id: PropTypes.string,
-  product: productPropTypes,
   user: userPropTypes,
+  product: productPropTypes,
+  quantity: PropTypes.number,
 });
 
 Info.propTypes = {
