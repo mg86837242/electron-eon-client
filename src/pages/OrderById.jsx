@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useQuery } from '@tanstack/react-query';
 
 import { getOrderByIdForCurrUser } from '../api';
+import queryClient from '../lib/queryClientConfig';
 import useAuthStore from '../store/useAuthStore';
 import capFirst from '../utils/capFirst';
 
@@ -18,6 +19,19 @@ export default function OrderById() {
     queryKey: ['getOrderByIdForCurrUser', id],
     queryFn: () => getOrderByIdForCurrUser(id),
     // Cond initial data from cache: https://tanstack.com/query/latest/docs/framework/react/guides/initial-query-data#conditional-initial-data-from-cache
+    /**
+     * 1. On First Mount:
+     * -- If `initialData` is available, the query will return immediately with the `initialData`, and the data will be
+     *    cached for future use.
+     * -- If `initialData` is not available, the query data will be fetched from the backend, and the query will return
+     *    with the fetched data, which will also be cached for future use.
+     * 2. After 10 Minutes of First Mount {@link queryClient}:
+     * -- If there is no refreshing (manual or automatic), no refocusing of the window, and no network reconnection,
+     *    the query data will remain cached but will be marked as stale after 10 minutes.
+     * -- The cached data will still be used for rendering, but if a subsequent query occurs (due to a change in query
+     *    key or manual refetch), the cached data may be considered stale, and React Query may trigger a refetch based
+     *    on the conditions set for refetching.
+     */
     initialData: () => {
       if (orderResponse) {
         return orderResponse;

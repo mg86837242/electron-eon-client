@@ -23,7 +23,8 @@ const createAuthSlice = (set, get) => ({
       requestOptions,
     );
     /**
-     * The following line won't be reached if fetch error occurs, error will propagate to the {@link useAuthentication} hook
+     * The following line won't be reached if fetch error occurs, error will propagate to the {@link useAuthentication}
+     * hook
      */
     set({ token: await response.data });
   },
