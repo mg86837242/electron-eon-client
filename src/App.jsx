@@ -1,10 +1,9 @@
 import { RouterProvider } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 import { MuiThemeProvider } from './components';
 import router from './routes';
-
-const queryClient = new QueryClient();
+import queryClient from './lib/queryClientConfig';
 
 export default function App() {
   return (
