@@ -6,26 +6,46 @@ import Typography from '@mui/material/Typography';
 
 import useAuthStore from '../store/useAuthStore';
 import capFirst from '../utils/capFirst';
+import { useQuery } from '@tanstack/react-query';
+import { getOrderByIdForCurrUser } from '../api';
+import { useParams } from 'react-router-dom';
+import { Spinner } from '../components';
 
 export default function OrderById() {
-  // FIXME optimistic rendering based on store, but fetch the actual data by using `useParams`
+  const { id } = useParams();
+  const orderResponse = useAuthStore(state => state.orderResponse);
+
+  const { data: order, isPending } = useQuery({
+    queryKey: ['getOrderByIdForCurrUser', id],
+    queryFn: () => getOrderByIdForCurrUser(id),
+    initialData: orderResponse ?? {
+      city: '',
+      street: '',
+      user: { firstName: '', lastName: '', email: '' },
+      orderProducts: [],
+      createdAt: '',
+    },
+  });
+
+  if (isPending) {
+    return <Spinner />;
+  }
+
   const {
-    id,
     city,
     street,
     user: { firstName, lastName, email },
     orderProducts,
     createdAt,
-  } = useAuthStore(state => state.orderResponse);
-
+  } = order;
   const totalPrice = orderProducts
     ?.reduce((acc, cv) => acc + cv?.product?.price * cv?.quantity, 0)
-    .toFixed(2);
+    ?.toFixed(2);
 
   return (
     <>
       <Typography variant='subtitle2' color='text.secondary'>
-        Order id: {id}
+        Order no.: {id}
       </Typography>
       <Typography variant='h4' gutterBottom>
         Order Information
@@ -96,7 +116,7 @@ export default function OrderById() {
             secondary={''}
           />
           <Typography variant='body1' fontWeight='medium'>
-            $ {totalPrice}
+            $ {totalPrice ?? 0}
           </Typography>
         </ListItem>
       </List>
