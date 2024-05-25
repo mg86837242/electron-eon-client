@@ -25,6 +25,14 @@ export default function OrderById() {
      *    cached for future use.
      * -- If `initialData` is not available, the query data will be fetched from the backend, and the query will return
      *    with the fetched data, which will also be cached for future use.
+     * -- The presence of `refetchOnMount`, `refetchOnWindowFocus`, `refetchOnReconnect`, or `refetchInterval` can
+     *    affect this behavior:
+     *    -- If `refetchOnMount` is `true`, the query will be refetched immediately after the `initialData` is returned,
+     *       regardless of whether `initialData` is provided or fetched from the backend.
+     *    -- Similarly, if `refetchOnWindowFocus` is `true`, the query will be refetched when the window regains focus.
+     *    -- If `refetchOnReconnect` is `true`, the query will be refetched when the network reconnects.
+     *    -- If `refetchInterval` is specified, the query will be automatically refetched at the specified interval,
+     *       regardless of other conditions.
      * 2. After 10 Minutes of First Mount {@link queryClient}:
      * -- If there is no refreshing (manual or automatic), no refocusing of the window, and no network reconnection,
      *    the query data will remain cached but will be marked as stale after 10 minutes.
