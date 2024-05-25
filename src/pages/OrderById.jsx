@@ -33,7 +33,7 @@ export default function OrderById() {
      *    -- If `refetchOnReconnect` is `true`, the query will be refetched when the network reconnects.
      *    -- If `refetchInterval` is specified, the query will be automatically refetched at the specified interval,
      *       regardless of other conditions.
-     * 2. After 10 Minutes of First Mount {@link queryClient}:
+     * 2. After 10 Minutes {@link queryClient} of First Mount:
      * -- If there is no refreshing (manual or automatic), no refocusing of the window, and no network reconnection,
      *    the query data will remain cached but will be marked as stale after 10 minutes.
      * -- The cached data will still be used for rendering, but if a subsequent query occurs (due to a change in query
