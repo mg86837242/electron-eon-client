@@ -38,6 +38,7 @@ const createAuthSlice = (set, get) => ({
     const response = await axios.get(`${BASE_URL}/auth/me`, requestOptions);
 
     set({ authUser: await response.data });
+    set({ isAuthUserLoading: false });
   },
   updateToken: newToken => set({ token: newToken }),
   updateAuthUser: newAuthUser => set({ authUser: newAuthUser }),

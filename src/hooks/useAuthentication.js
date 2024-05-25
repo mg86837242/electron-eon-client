@@ -38,7 +38,6 @@ export default function useAuthentication() {
     (async () => {
       try {
         await fetchAuthUser(source.token);
-        updateIsAuthUserLoading(false);
       } catch (error) {
         if (!axios.isCancel(error)) {
           console.error(
@@ -99,7 +98,7 @@ export default function useAuthentication() {
     [updateToken, updateAuthUser],
   );
 
-  const auth = React.useMemo(
+  return React.useMemo(
     () => ({
       loginError,
       handleLogin,
@@ -107,6 +106,4 @@ export default function useAuthentication() {
     }),
     [loginError, handleLogin, handleLogout],
   );
-
-  return auth;
 }

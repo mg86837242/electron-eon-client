@@ -8,7 +8,7 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
-// NB Naming the component `FAQ` will somehow violate 'react-refresh' plugin's linting rules for some reason (maybe it's b/c it's all capitalized?)
+// NB Naming the component `FAQ` will somehow violate 'react-refresh' plugin's linting rules for unknown reason (maybe it's b/c it's all capitalized?)
 export default function Faq() {
   const [expanded, setExpanded] = React.useState(false);
 
