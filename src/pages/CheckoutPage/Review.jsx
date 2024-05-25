@@ -114,25 +114,25 @@ export default function Review({ cartItems, formData }) {
 
 const productPropTypes = PropTypes.shape({
   id: PropTypes.string,
-  category: PropTypes.string,
-  description: PropTypes.string,
   name: PropTypes.string,
+  description: PropTypes.string,
+  category: PropTypes.string,
   price: PropTypes.number,
-  quantity: PropTypes.number,
 });
 
 const userPropTypes = PropTypes.shape({
+  id: PropTypes.string,
   email: PropTypes.string,
   firstName: PropTypes.string,
-  id: PropTypes.string,
   lastName: PropTypes.string,
   role: PropTypes.string,
 });
 
 const cartItemPropTypes = PropTypes.shape({
   id: PropTypes.string,
-  product: productPropTypes,
   user: userPropTypes,
+  product: productPropTypes,
+  quantity: PropTypes.number,
 });
 
 const formDataPropTypes = PropTypes.shape({
