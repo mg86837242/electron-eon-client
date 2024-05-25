@@ -11,9 +11,10 @@ const useAuthStore = create(
       ...createCheckoutSlice(...args),
     }),
     {
-      name: `${import.meta.env.VITE_APP_NAME}-token`,
+      name: `${import.meta.env.VITE_APP_NAME}-auth`,
       partialize: state => ({
         token: state.token,
+        hasVisitedCheckout: state.hasVisitedCheckout,
       }),
     },
   ),

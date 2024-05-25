@@ -48,9 +48,17 @@ export default function CheckoutPage() {
   const updateIsAuthUserLoading = useAuthStore(
     state => state.updateAuthUserLoading,
   );
+  const updateHasVisitedCheckout = useAuthStore(
+    state => state.updateHasVisitedCheckout,
+  );
   const updateOrderResponse = useAuthStore(state => state.updateOrderResponse);
 
-  // The navbar (which contains the logic to validate token) is not rendered on this page, so need to validate here
+  // Track if the user has been allowed to visit the checkout page
+  React.useEffect(() => {
+    updateHasVisitedCheckout(true);
+  }, [updateHasVisitedCheckout]);
+
+  // Validate the token since the navbar (contains token validation logic) is not rendered on the checkout page
   React.useEffect(() => {
     if (!token) {
       updateIsAuthUserLoading(false);
@@ -72,6 +80,26 @@ export default function CheckoutPage() {
   const { data: cartItems } = useQuery({
     queryKey: ['getCartsForCurrUser'],
     queryFn: getCartsForCurrUser,
+    placeholderData: [
+      {
+        id: '',
+        user: {
+          id: '',
+          email: '',
+          firstName: '',
+          lastName: '',
+          role: '',
+        },
+        product: {
+          id: '',
+          name: '',
+          description: '',
+          price: 0,
+          category: '',
+        },
+        quantity: 0,
+      },
+    ],
   });
 
   const orderProductsInCart = cartItems?.map(cartItem => ({
