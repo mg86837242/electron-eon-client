@@ -26,7 +26,7 @@ export default function OrderById() {
     // `staleTime` option: https://tanstack.com/query/latest/docs/framework/react/guides/initial-query-data#staletime-and-initialdataupdatedat
     staleTime: Infinity,
     // With this `placeholderData`, pending indicator (e.g., spinner) is not need for this page, the indicator displayed in this screen comes from <RequireAuth>
-    // `placeholderData` vs `initialData`: https://tkdodo.eu/blog/placeholder-and-initial-data-in-react-query
+    // `placeholderData` vs `initialData`: https://tanstack.com/query/latest/docs/framework/react/community/tkdodos-blog#9-placeholder-and-initial-data-in-react-query
     placeholderData: {
       city: '',
       street: '',
