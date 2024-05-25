@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
-import Forbidden from './Forbidden';
 import useAuthStore from '../store/useAuthStore';
+
+import Forbidden from './Forbidden';
 
 export default function RequireFromCart() {
   const location = useLocation();

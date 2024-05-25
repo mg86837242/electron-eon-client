@@ -127,6 +127,7 @@ export default function CheckoutPage() {
   const handleNext = () => {
     if (activeStep === 2) {
       mutate(formData);
+      updateHasVisitedCheckout(false);
     }
 
     setActiveStep(activeStep + 1);
