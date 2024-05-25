@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useController, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -21,17 +21,54 @@ import { registerUser } from '../api';
 import { AuthFooter } from '../components';
 import registerSchema from '../schemas/registerSchema';
 
+function ControlledTextField({
+  name,
+  control,
+  setValue,
+  label,
+  autoComplete,
+  type = 'text',
+  autoFocus = false,
+}) {
+  const {
+    field: { ref, ...inputProps },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+  });
+
+  return (
+    <TextField
+      {...inputProps}
+      inputRef={ref}
+      // ??? Using `trigger` returned by `useForm`, then passing down `trigger` and adding `trigger(${name})` to each
+      //  <TextField>  would cause all fields to re-render when updating one field, despite using `trigger(${name})`
+      //  according to the docs => https://github.com/react-hook-form/react-hook-form/issues/1108: adding `mode:
+      //  'onChange'` option to the `useForm`, then passing down the returned `setValue` and adding `onChange={e =>
+      //  { inputProps.onChange(e); setValue(name, e.target.value, { shouldValidate: true }); }}` to the `onChange` prop
+      //  of <TextField> => somehow solve the issue => but removing everything related `setValue`, everything still
+      //  works fine
+      error={!!error}
+      helperText={error ? error.message : ''}
+      required
+      fullWidth
+      id={`register-${name}`}
+      label={label}
+      autoComplete={autoComplete}
+      type={type}
+      autoFocus={autoFocus}
+      variant='filled'
+    />
+  );
+}
+
 export default function SignUp() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    trigger,
-  } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       firstName: '',
@@ -39,6 +76,7 @@ export default function SignUp() {
       email: '',
       password: '',
     },
+    mode: 'onChange',
   });
 
   const {
@@ -107,110 +145,46 @@ export default function SignUp() {
           }}
         >
           <Grid container spacing={2} justifyContent='center'>
-            <Grid xs={12} sm={6}>
-              <Controller
+            <Grid item xs={12} sm={6}>
+              <ControlledTextField
                 name='firstName'
                 control={control}
-                render={({ field: { name, value, ref, onChange, onBlur } }) => (
-                  <TextField
-                    name={name}
-                    value={value}
-                    inputRef={ref}
-                    onChange={e => {
-                      onChange(e);
-                      trigger('firstName');
-                    }}
-                    onBlur={onBlur}
-                    error={!!errors.firstName}
-                    helperText={errors.firstName?.message}
-                    required
-                    fullWidth
-                    id='register-first-name'
-                    label='First Name'
-                    autoComplete='given-name'
-                    autoFocus
-                    variant='filled'
-                  />
-                )}
+                setValue={setValue}
+                // label='First Name'
+                label={`First Name ${Math.random()}`}
+                autoComplete='given-name'
+                autoFocus
               />
             </Grid>
-            <Grid xs={12} sm={6}>
-              <Controller
+            <Grid item xs={12} sm={6}>
+              <ControlledTextField
                 name='lastName'
                 control={control}
-                render={({ field: { name, value, ref, onChange, onBlur } }) => (
-                  <TextField
-                    name={name}
-                    value={value}
-                    inputRef={ref}
-                    onChange={e => {
-                      onChange(e);
-                      trigger('lastName');
-                    }}
-                    onBlur={onBlur}
-                    error={!!errors.lastName}
-                    helperText={errors.lastName?.message}
-                    required
-                    fullWidth
-                    id='register-last-name'
-                    label='Last Name'
-                    autoComplete='family-name'
-                    variant='filled'
-                  />
-                )}
+                setValue={setValue}
+                // label='Last Name'
+                label={`Last Name ${Math.random()}`}
+                autoComplete='family-name'
               />
             </Grid>
-            <Grid xs={12}>
-              <Controller
+            <Grid item xs={12}>
+              <ControlledTextField
                 name='email'
                 control={control}
-                render={({ field: { name, value, ref, onChange, onBlur } }) => (
-                  <TextField
-                    name={name}
-                    value={value}
-                    inputRef={ref}
-                    onChange={e => {
-                      onChange(e);
-                      trigger('email');
-                    }}
-                    onBlur={onBlur}
-                    error={!!errors.email}
-                    helperText={errors.email?.message}
-                    required
-                    fullWidth
-                    id='register-email'
-                    label='Email Address'
-                    autoComplete='email'
-                    variant='filled'
-                  />
-                )}
+                setValue={setValue}
+                // label='Email Address'
+                label={`Email Address ${Math.random()}`}
+                autoComplete='email'
               />
             </Grid>
-            <Grid xs={12}>
-              <Controller
+            <Grid item xs={12}>
+              <ControlledTextField
                 name='password'
                 control={control}
-                render={({ field: { name, value, ref, onChange, onBlur } }) => (
-                  <TextField
-                    name={name}
-                    value={value}
-                    inputRef={ref}
-                    onChange={e => {
-                      onChange(e);
-                      trigger('password');
-                    }}
-                    onBlur={onBlur}
-                    error={!!errors.password}
-                    helperText={errors.password?.message}
-                    required
-                    fullWidth
-                    id='register-password'
-                    label='Password'
-                    type='password'
-                    autoComplete='new-password'
-                    variant='filled'
-                  />
-                )}
+                setValue={setValue}
+                // label='Password'
+                label={`Password ${Math.random()}`}
+                type='password'
+                autoComplete='new-password'
               />
             </Grid>
             <Grid xs={12}>
@@ -277,3 +251,13 @@ export default function SignUp() {
     </Container>
   );
 }
+
+// Reference:
+// -- need validation on change => use `useForm`'s `mode` option and `register` since it actually works w/ MUI:
+//    https://www.youtube.com/watch?v=sD9fZxMO1us => however, it's not recommended by neither MUI docs nor RHF docs
+// -- need validation on change with <Controller> or `useController => use `trigger` returned by `useForm` to "manually
+//    triggers form or input validation": https://old.reddit.com/r/reactjs/comments/18lcv5a/ => not recommended b/c
+//    updating one field will cause all fields to be updated as well, despite using `trigger(${name})` according to the
+//    docs: https://react-hook-form.com/docs/useform/trigger =>
+//    https://github.com/react-hook-form/react-hook-form/issues/1108
+// -- email regex pattern: https://stackoverflow.com/questions/201323/ => linter error => use schema validation

@@ -169,10 +169,3 @@ export default function SignInSide() {
     </Grid>
   );
 }
-
-// Reference:
-// -- need validation on change => use `useForm`'s `mode` option and `register` since it actually works w/ MUI:
-//    https://www.youtube.com/watch?v=sD9fZxMO1us => however, it's not recommended by neither MUI docs nor RHF docs
-// -- use `trigger` returned by `useForm` to "manually triggers form or input validation"
-//    https://old.reddit.com/r/reactjs/comments/18lcv5a/how_can_i_make_my_input_validate_onchange_instead/
-// -- email regex pattern: https://stackoverflow.com/questions/201323/ => linter error => use schema validation
