@@ -1,24 +1,33 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
+import { useQuery } from '@tanstack/react-query';
 
+import { getOrderByIdForCurrUser } from '../api';
 import useAuthStore from '../store/useAuthStore';
 import capFirst from '../utils/capFirst';
-import { useQuery } from '@tanstack/react-query';
-import { getOrderByIdForCurrUser } from '../api';
-import { useParams } from 'react-router-dom';
-import { Spinner } from '../components';
 
 export default function OrderById() {
   const { id } = useParams();
   const orderResponse = useAuthStore(state => state.orderResponse);
 
-  const { data: order, isPending } = useQuery({
+  const { data: order } = useQuery({
     queryKey: ['getOrderByIdForCurrUser', id],
     queryFn: () => getOrderByIdForCurrUser(id),
-    initialData: orderResponse ?? {
+    // Cond initial data from cache: https://tanstack.com/query/latest/docs/framework/react/guides/initial-query-data#conditional-initial-data-from-cache
+    initialData: () => {
+      if (orderResponse) {
+        return orderResponse;
+      }
+    },
+    // `staleTime` option: https://tanstack.com/query/latest/docs/framework/react/guides/initial-query-data#staletime-and-initialdataupdatedat
+    staleTime: Infinity,
+    // With this `placeholderData`, pending indicator (e.g., spinner) is not need for this page, the indicator displayed in this screen comes from <RequireAuth>
+    // `placeholderData` vs `initialData`: https://tkdodo.eu/blog/placeholder-and-initial-data-in-react-query
+    placeholderData: {
       city: '',
       street: '',
       user: { firstName: '', lastName: '', email: '' },
@@ -26,10 +35,6 @@ export default function OrderById() {
       createdAt: '',
     },
   });
-
-  if (isPending) {
-    return <Spinner />;
-  }
 
   const {
     city,
