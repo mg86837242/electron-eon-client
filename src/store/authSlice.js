@@ -37,7 +37,10 @@ const createAuthSlice = (set, get) => ({
     };
 
     const response = await axios.get(`${BASE_URL}/auth/me`, requestOptions);
-
+    /**
+     * The following line won't be reached if fetch error occurs, error will propagate to the {@link useAuthentication}
+     * hook
+     */
     set({ authUser: await response.data });
     set({ isAuthUserLoading: false });
   },

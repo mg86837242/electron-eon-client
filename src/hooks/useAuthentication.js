@@ -6,6 +6,7 @@ import useAuthStore from '../store/useAuthStore';
 import isTokenExpired from '../utils/isTokenExpired';
 
 export default function useAuthentication() {
+  // This state is not global b/c not all pages need it (e.g., the checkout page)
   const [loginError, setLoginError] = React.useState('');
   const token = useAuthStore(state => state.token);
   const fetchToken = useAuthStore(state => state.fetchToken);
@@ -61,6 +62,7 @@ export default function useAuthentication() {
     updateIsAuthUserLoading,
   ]);
 
+  // This handler is not global b/c not all pages need it (e.g., the checkout page)
   const handleLogin = React.useCallback(
     async (usernameIn, passwordIn, callback) => {
       updateAuthUser(null);
@@ -84,6 +86,7 @@ export default function useAuthentication() {
     [fetchToken, updateAuthUser, updateIsAuthUserLoading],
   );
 
+  // This handler is not global b/c not all pages need it (e.g., the checkout page)
   const handleLogout = React.useCallback(
     callback => {
       try {
