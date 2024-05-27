@@ -45,7 +45,8 @@ export default function OrderById() {
         return orderResponse;
       }
     },
-    // With this `placeholderData`, pending indicator (e.g., spinner) is not need for this page, the indicator displayed in this screen comes from <RequireAuth>
+    // With this `placeholderData`, pending indicator (e.g., spinner) is not need for this page, the indicator
+    //  displayed in this screen comes from <RequireAuth>;
     // `placeholderData` vs `initialData`: https://tanstack.com/query/latest/docs/framework/react/community/tkdodos-blog#9-placeholder-and-initial-data-in-react-query
     placeholderData: {
       city: '',
