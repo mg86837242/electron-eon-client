@@ -65,12 +65,6 @@ ControlledTextField.propTypes = {
   autoFocus: PropTypes.bool,
 };
 
-ControlledTextField.defaultProps = {
-  autoComplete: '',
-  type: 'text',
-  autoFocus: false,
-};
-
 export default function SignUp() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);

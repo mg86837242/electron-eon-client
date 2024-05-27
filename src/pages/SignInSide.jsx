@@ -65,12 +65,6 @@ ControlledTextField.propTypes = {
   autoFocus: PropTypes.bool,
 };
 
-ControlledTextField.defaultProps = {
-  autoComplete: '',
-  type: 'text',
-  autoFocus: false,
-};
-
 export default function SignInSide() {
   const navigate = useNavigate();
   const location = useLocation();
