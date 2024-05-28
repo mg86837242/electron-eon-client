@@ -20,10 +20,10 @@ export default function RequireAuth({ permittedRoles }) {
   const isAuthUserLoading = useAuthStore(state => state.isAuthUserLoading);
 
   // `token` state is persisted, thus more reliable, whereas `authUser` will be briefly null on mount
-  const isAuthenticated = !!token && !isTokenExpired(token);
+  const hasPersistedToken = !!token && !isTokenExpired(token);
   const canAccess = permittedRoles?.includes(authUser?.claims?.scope);
 
-  if (!isAuthenticated) {
+  if (!hasPersistedToken) {
     return <Navigate to='/login' state={{ from: location }} replace />;
   }
 
