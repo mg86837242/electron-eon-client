@@ -3,12 +3,12 @@ import axios from 'axios';
 import { BASE_URL } from '../data/constants';
 import useAuthStore from '../store/useAuthStore';
 
-const api = axios.create({
+export const authApi = axios.create({
   baseURL: BASE_URL,
   timeout: 5_000,
 });
 
-api.interceptors.request.use(
+authApi.interceptors.request.use(
   config => {
     const token = useAuthStore.getState().token;
 
@@ -23,4 +23,7 @@ api.interceptors.request.use(
   },
 );
 
-export default api;
+export const api = axios.create({
+  baseURL: BASE_URL,
+  timeout: 5_000,
+});

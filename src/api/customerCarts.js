@@ -1,13 +1,12 @@
-import { BASE_URL } from '../data/constants';
-import api from '../lib/axiosConfig';
+import { authApi } from '../lib/axiosConfig';
 
 export async function getCartById({ params }) {
-  const response = await api.get(`${BASE_URL}/customer/carts/${params.id}`);
+  const response = await authApi.get(`/customer/carts/${params.id}`);
   return response.data;
 }
 
 export const getCartsForCurrUser = async () => {
-  const response = await api.get(`${BASE_URL}/customer/carts/current-user`);
+  const response = await authApi.get(`/customer/carts/current-user`);
   return response.data;
 };
 
@@ -15,8 +14,8 @@ export const getCartsForCurrUser = async () => {
 export async function upsertProdQtyInCartForCurrUser({ request }) {
   const submitted = await request.json();
   const body = {};
-  const response = await api.post(
-    `${BASE_URL}/customer/carts/current-user/products/${submitted.productId}/upsert-quantity?quantity=${submitted.quantity}`,
+  const response = await authApi.post(
+    `/customer/carts/current-user/products/${submitted.productId}/upsert-quantity?quantity=${submitted.quantity}`,
     body,
   );
   return;
@@ -24,15 +23,15 @@ export async function upsertProdQtyInCartForCurrUser({ request }) {
 
 // For catalog page
 export const incrementProdQtyInCartForCurrUser = productId =>
-  api.patch(
-    `${BASE_URL}/customer/carts/current-user/products/${productId}/increment-quantity`,
+  authApi.patch(
+    `/customer/carts/current-user/products/${productId}/increment-quantity`,
     {},
   );
 
 // For catalog page
 export const decrementProdQtyInCartForCurrUser = productId =>
-  api.patch(
-    `${BASE_URL}/customer/carts/current-user/products/${productId}/decrement-quantity`,
+  authApi.patch(
+    `/customer/carts/current-user/products/${productId}/decrement-quantity`,
     {},
   );
 
@@ -40,8 +39,8 @@ export const decrementProdQtyInCartForCurrUser = productId =>
 export async function updateProdQtyInCartById({ request }) {
   const submitted = await request.json();
   const body = {};
-  const response = await api.patch(
-    `${BASE_URL}/customer/carts/${submitted.id}/update-quantity?quantity=${submitted.quantity}`,
+  const response = await authApi.patch(
+    `/customer/carts/${submitted.id}/update-quantity?quantity=${submitted.quantity}`,
     body,
   );
   return;
@@ -49,16 +48,15 @@ export async function updateProdQtyInCartById({ request }) {
 
 // For dedicated cart page or admin page
 export const incrementProdQtyInCartById = id =>
-  api.patch(`${BASE_URL}/customer/carts/${id}/increment-quantity`, {});
+  authApi.patch(`/customer/carts/${id}/increment-quantity`, {});
 
 // For dedicated cart page or admin page
 export const decrementProdQtyInCartById = id =>
-  api.patch(`${BASE_URL}/customer/carts/${id}/decrement-quantity`, {});
+  authApi.patch(`/customer/carts/${id}/decrement-quantity`, {});
 
-export const deleteCartById = id =>
-  api.delete(`${BASE_URL}/customer/carts/${id}`);
+export const deleteCartById = id => authApi.delete(`/customer/carts/${id}`);
 
 export async function deleteCartForCurrUser() {
-  const response = await api.delete(`${BASE_URL}/customer/carts/current-user`);
+  const response = await authApi.delete(`/customer/carts/current-user`);
   return;
 }

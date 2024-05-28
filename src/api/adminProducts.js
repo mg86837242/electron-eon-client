@@ -1,22 +1,18 @@
-import { BASE_URL } from '../data/constants';
-import api from '../lib/axiosConfig';
+import { authApi } from '../lib/axiosConfig';
 
 export async function addProduct({ request }) {
   const body = await request.json();
-  const response = await api.post(`${BASE_URL}/admin/products`, body);
+  const response = await authApi.post(`/admin/products`, body);
   return;
 }
 
 export async function updateProductById({ params, request }) {
   const body = await request.json();
-  const response = await api.patch(
-    `${BASE_URL}/admin/products/${params.id}`,
-    body,
-  );
+  const response = await authApi.patch(`/admin/products/${params.id}`, body);
   return;
 }
 
 export async function deleteProductById({ params }) {
-  const response = await api.delete(`${BASE_URL}/admin/products/${params.id}`);
+  const response = await authApi.delete(`/admin/products/${params.id}`);
   return;
 }

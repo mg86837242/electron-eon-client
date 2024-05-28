@@ -1,17 +1,16 @@
-import { BASE_URL } from '../data/constants';
-import api from '../lib/axiosConfig';
+import { api } from '../lib/axiosConfig';
 
 export const getAllProducts = async () => {
-  const response = await api.get(`${BASE_URL}/products`);
+  const response = await api.get(`/products`);
   return response.data;
 };
 
 export const getProductById = async id => {
-  const response = await api.get(`${BASE_URL}/products/${id}`);
+  const response = await api.get(`/products/${id}`);
   return response.data;
 };
 
 export const getProductsByCategory = async category => {
-  const response = await api.get(`${BASE_URL}/products?category=${category}`);
+  const response = await api.get(`/products?category=${category}`);
   return response.data;
 };

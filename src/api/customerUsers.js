@@ -1,21 +1,17 @@
-import { BASE_URL } from '../data/constants';
-import api from '../lib/axiosConfig';
+import { authApi } from '../lib/axiosConfig';
 
 export async function getCurrUser() {
-  const response = await api.get(`${BASE_URL}/admin/users/current-user`);
+  const response = await authApi.get(`/admin/users/current-user`);
   return response.data;
 }
 
 export async function updateUserById({ request }) {
   const body = await request.json();
-  const response = await api.patch(
-    `${BASE_URL}/admin/users/current-user`,
-    body,
-  );
+  const response = await authApi.patch(`/admin/users/current-user`, body);
   return;
 }
 
 export async function deleteUserById() {
-  const response = await api.delete(`${BASE_URL}/admin/users/current-user`);
+  const response = await authApi.delete(`/admin/users/current-user`);
   return;
 }
