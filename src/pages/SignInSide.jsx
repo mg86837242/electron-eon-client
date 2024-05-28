@@ -78,7 +78,7 @@ export default function SignInSide() {
   const from = location.state?.from?.pathname || '/';
 
   const onSubmit = data => {
-    handleLogin(data.email, data.password, () =>
+    handleLogin(data?.email, data?.password, () =>
       navigate(from, { replace: true }),
     );
   };
