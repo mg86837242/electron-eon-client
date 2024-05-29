@@ -1,22 +1,23 @@
 import * as React from 'react';
 import axios from 'axios';
 
+import { getAuthUser, loginUser } from '../api';
 import router from '../routes';
 import useAuthStore from '../store/useAuthStore';
 import isTokenExpired from '../utils/isTokenExpired';
+import { useMutation } from '@tanstack/react-query';
 
 export default function useAuthentication() {
   // This state is not global b/c not all pages need it (e.g., the checkout page)
   const [loginError, setLoginError] = React.useState('');
   const token = useAuthStore(state => state.token);
-  const fetchToken = useAuthStore(state => state.fetchToken);
-  const fetchAuthUser = useAuthStore(state => state.fetchAuthUser);
   const updateToken = useAuthStore(state => state.updateToken);
   const updateAuthUser = useAuthStore(state => state.updateAuthUser);
   const updateIsAuthUserLoading = useAuthStore(
     state => state.updateAuthUserLoading,
   );
 
+  // FIXME Provide this Effect
   // Validate the persisted token, then sync with db by using the persisted token
   React.useEffect(() => {
     if (!token) {
@@ -38,7 +39,10 @@ export default function useAuthentication() {
     const source = axios.CancelToken.source();
     (async () => {
       try {
-        await fetchAuthUser(source.token);
+        const authUser = await getAuthUser(token, source.token);
+
+        updateAuthUser(authUser);
+        updateIsAuthUserLoading(false);
       } catch (error) {
         if (!axios.isCancel(error)) {
           console.error(
@@ -54,36 +58,40 @@ export default function useAuthentication() {
     return () => {
       source.cancel('Operation canceled by the user.');
     };
-  }, [
-    token,
-    fetchAuthUser,
-    updateToken,
-    updateAuthUser,
-    updateIsAuthUserLoading,
-  ]);
+  }, [token, updateToken, updateAuthUser, updateIsAuthUserLoading]);
+
+  const { mutateAsync: loginMutate } = useMutation({
+    mutationFn: loginUser,
+    onMutate: () => {
+      updateIsAuthUserLoading(true);
+      updateAuthUser(null);
+    },
+    onSuccess: data => {
+      updateToken(data);
+    },
+    onError: error => {
+      error?.response?.status === 401
+        ? setLoginError('Invalid credentials')
+        : setLoginError(
+            'Something went wrong (Are you connected to the internet)',
+          );
+    },
+  });
 
   // This handler is not global b/c not all pages need it (e.g., the checkout page)
   const handleLogin = React.useCallback(
-    async (usernameIn, passwordIn, callback) => {
-      updateAuthUser(null);
-      updateIsAuthUserLoading(true);
-
+    async (username, password, callback) => {
       try {
-        // Fetched token will be sent to the store and persisted, for further use in the Effect hook; Effect hook will auto fire after the `token` state - a dependency - is changed
-        await fetchToken(usernameIn, passwordIn);
+        await loginMutate({ username, password });
 
         callback && callback();
       } catch (error) {
-        if (error?.response?.status === 401) {
-          setLoginError('Invalid credentials');
-        } else {
-          setLoginError(
-            'Something went wrong (Are you connected to the internet)',
-          );
-        }
+        // B/c the `onError` option of the `useMutation` is a callback func, errors are not considered as caught if
+        // handled in the `onError` option, resulting in axios printing the error in the browser; therefore, this catch
+        // block is needed
       }
     },
-    [fetchToken, updateAuthUser, updateIsAuthUserLoading],
+    [loginMutate],
   );
 
   // This handler is not global b/c not all pages need it (e.g., the checkout page)
