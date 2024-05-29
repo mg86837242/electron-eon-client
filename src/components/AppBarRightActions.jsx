@@ -26,7 +26,7 @@ export default function AppBarRightActions({ isAuthenticated, handleLogout }) {
         variant='contained'
         size='small'
         component='a'
-        onClick={() => handleLogout()}
+        onClick={() => handleLogout(() => navigate('/'))}
       >
         Log out
       </Button>

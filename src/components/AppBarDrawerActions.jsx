@@ -26,7 +26,7 @@ export default function AppBarDrawerActions({ isAuthenticated, handleLogout }) {
           color='primary'
           variant='contained'
           component='a'
-          onClick={() => handleLogout()}
+          onClick={() => handleLogout(() => navigate('/'))}
           sx={{ width: '100%' }}
         >
           Log out

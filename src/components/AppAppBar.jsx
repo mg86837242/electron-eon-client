@@ -13,9 +13,8 @@ import Typography from '@mui/material/Typography';
 
 import logo from '../assets/logo-01.svg';
 import useAuthentication from '../hooks/useAuthentication';
-import useAuthStore from '../store/useAuthStore';
+import useAuthUser from '../hooks/useAuthUser';
 import useThemeStore from '../store/useThemeStore';
-import isTokenExpired from '../utils/isTokenExpired';
 
 import AppBarDrawerActions from './AppBarDrawerActions';
 import AppBarRightActions from './AppBarRightActions';
@@ -32,10 +31,10 @@ export default function AppAppBar() {
   const navigate = useNavigate();
   const colorMode = useThemeStore(state => state.colorMode);
   const toggleColorMode = useThemeStore(state => state.toggleColorMode);
-  const token = useAuthStore(state => state.token);
+  const { authUser } = useAuthUser(); // TODO highly likely need the pending state to handle the case when the `authUser` is not populated, but since cache is being used, it's not urgent to fix this
   const { handleLogout } = useAuthentication();
 
-  const isAuthenticated = !!token && !isTokenExpired(token);
+  const isAuthenticated = !!authUser;
 
   const toggleDrawer = newOpen => () => {
     setOpen(newOpen);
@@ -245,7 +244,7 @@ export default function AppAppBar() {
                   <Divider />
                   <AppBarDrawerActions
                     isAuthenticated={isAuthenticated}
-                    handleLogout={() => handleLogout(toggleDrawer(false))}
+                    handleLogout={handleLogout}
                   />
                 </Box>
               </Drawer>

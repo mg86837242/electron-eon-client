@@ -1,18 +1,17 @@
 import * as React from 'react';
 
 import { Spinner } from '../../components';
-import useAuthStore from '../../store/useAuthStore';
+import useAuthUser from '../../hooks/useAuthUser';
 
 import ProductCatalog from './ProductCatalog';
 import ProductCatalogForCurrUser from './ProductCatalogForCurrUser';
 
 export default function ProductsPage() {
-  const authUser = useAuthStore(state => state.authUser);
-  const isAuthUserLoading = useAuthStore(state => state.isAuthUserLoading);
+  const { authUser, isAuthUserPending } = useAuthUser();
 
   const role = authUser?.claims?.scope;
 
-  if (isAuthUserLoading) {
+  if (isAuthUserPending) {
     return <Spinner />;
   }
 

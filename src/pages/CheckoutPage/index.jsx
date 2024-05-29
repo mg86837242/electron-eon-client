@@ -44,24 +44,14 @@ export default function CheckoutPage() {
   const toggleColorMode = useThemeStore(state => state.toggleColorMode);
   const token = useAuthStore(state => state.token);
   const updateToken = useAuthStore(state => state.updateToken);
-  const updateAuthUser = useAuthStore(state => state.updateAuthUser);
-  const updateIsAuthUserLoading = useAuthStore(
-    state => state.updateAuthUserLoading,
-  );
   const updateHasVisitedCheckout = useAuthStore(
     state => state.updateHasVisitedCheckout,
   );
   const updateOrderResponse = useAuthStore(state => state.updateOrderResponse);
 
-  // Track if the user has been allowed to visit the checkout page
-  React.useEffect(() => {
-    updateHasVisitedCheckout(true);
-  }, [updateHasVisitedCheckout]);
-
-  // Validate the token since the navbar (contains token validation logic) is not rendered on the checkout page
+  // Validate the token persisted on the client-side
   React.useEffect(() => {
     if (!token) {
-      updateIsAuthUserLoading(false);
       return;
     }
 
@@ -70,12 +60,10 @@ export default function CheckoutPage() {
         'You have been logged out because your bearer token has expired',
       );
       updateToken('');
-      updateAuthUser(null);
-      updateIsAuthUserLoading(false);
       navigate('/');
       return;
     }
-  }, [token, updateToken, updateAuthUser, updateIsAuthUserLoading, navigate]);
+  }, [token, updateToken, navigate]);
 
   const { data: cartItems } = useQuery({
     queryKey: ['getCartsForCurrUser'],

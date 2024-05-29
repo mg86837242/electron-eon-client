@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material';
 
-import useAuthStore from '../store/useAuthStore';
+import useAuthUser from '../hooks/useAuthUser';
 
 export default function Protected() {
-  const authUser = useAuthStore(state => state.authUser);
+  const { authUser } = useAuthUser();
 
   return (
     <Box>
