@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { getAuthUser, loginUser } from '../api';
 import router from '../routes';
 import useAuthStore from '../store/useAuthStore';
 import isTokenExpired from '../utils/isTokenExpired';
-import { useMutation } from '@tanstack/react-query';
 
 export default function useAuthentication() {
   // This state is not global b/c not all pages need it (e.g., the checkout page)
