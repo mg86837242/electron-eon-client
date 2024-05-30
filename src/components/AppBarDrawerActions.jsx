@@ -4,9 +4,18 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import PropTypes from 'prop-types';
 
-export default function AppBarDrawerActions({ isAuthenticated, handleLogout }) {
+export default function AppBarDrawerActions({
+  isAuthenticated,
+  handleLogout,
+  toggleDrawer,
+}) {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const onLogout = () => {
+    toggleDrawer(false);
+    navigate('/');
+  };
 
   return isAuthenticated ? (
     <>
@@ -26,7 +35,7 @@ export default function AppBarDrawerActions({ isAuthenticated, handleLogout }) {
           color='primary'
           variant='contained'
           component='a'
-          onClick={() => handleLogout(() => navigate('/'))}
+          onClick={() => handleLogout(onLogout)}
           sx={{ width: '100%' }}
         >
           Log out
@@ -64,4 +73,5 @@ export default function AppBarDrawerActions({ isAuthenticated, handleLogout }) {
 AppBarDrawerActions.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   handleLogout: PropTypes.func.isRequired,
+  toggleDrawer: PropTypes.func.isRequired,
 };

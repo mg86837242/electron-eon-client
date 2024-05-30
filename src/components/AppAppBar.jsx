@@ -245,6 +245,7 @@ export default function AppAppBar() {
                   <AppBarDrawerActions
                     isAuthenticated={isAuthenticated}
                     handleLogout={handleLogout}
+                    toggleDrawer={toggleDrawer}
                   />
                 </Box>
               </Drawer>
