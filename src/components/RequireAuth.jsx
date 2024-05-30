@@ -58,5 +58,5 @@ RequireAuth.propTypes = {
 // -- unstable middleware as of May 2024: https://reactrouter.com/en/main/routers/create-browser-router#middleware
 
 // References for `isPending` and `status === 'pending'
-// -- ""`pending` means you have no data. If the query is not enabled, it also has no data, that's why it's `pending`"":
+// -- "`pending` means you have no data. If the query is not enabled, it also has no data, that's why it's `pending`":
 //    https://github.com/TanStack/query/discussions/7329
