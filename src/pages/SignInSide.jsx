@@ -66,9 +66,10 @@ ControlledTextField.propTypes = {
 };
 
 export default function SignInSide() {
+  const [loginError, setLoginError] = React.useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { loginError, handleLogin } = useAuthentication();
+  const { handleLogin } = useAuthentication();
 
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(loginSchema),
@@ -77,10 +78,18 @@ export default function SignInSide() {
 
   const from = location.state?.from?.pathname || '/';
 
-  const onSubmit = data => {
-    handleLogin(data?.email, data?.password, () =>
-      navigate(from, { replace: true }),
-    );
+  const onSubmit = async data => {
+    try {
+      await handleLogin(data?.email, data?.password);
+
+      navigate(from, { replace: true });
+    } catch (error) {
+      error?.response?.status === 401
+        ? setLoginError('Invalid credentials')
+        : setLoginError(
+            'Something went wrong (Are you connected to the internet)',
+          );
+    }
   };
 
   return (
