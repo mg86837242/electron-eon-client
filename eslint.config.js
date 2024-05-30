@@ -62,7 +62,11 @@ export default [
       'simple-import-sort': simpleImportSort,
     },
     rules: {
-      'react-refresh/only-export-components': 'warn',
+      'react/jsx-no-target-blank': 'off',
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
       // https://dev.to/julioxavierr/sorting-your-imports-with-eslint-3ped
       'simple-import-sort/imports': [
         'warn',
