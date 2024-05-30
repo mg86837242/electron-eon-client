@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { BASE_URL } from '../data/constants';
-import useAuthStore from '../store/useAuthStore';
 
 export const authApi = axios.create({
   baseURL: BASE_URL,
