@@ -36,7 +36,7 @@ export default [
     ignores: [
       'dist',
       '.eslintrc.cjs',
-      '.eslint.config.js',
+      'eslint.config.js',
       // customized:
       '**/__*/**',
       'tailwind.config.cjs',
