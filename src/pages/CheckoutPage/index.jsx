@@ -19,7 +19,6 @@ import { addOrderForCurrUser, getCartsForCurrUser } from '../../api';
 import logo from '../../assets/logo-01.svg';
 import useAuthStore from '../../store/useAuthStore';
 import useThemeStore from '../../store/useThemeStore';
-import isTokenExpired from '../../utils/isTokenExpired';
 
 import AddressForm from './AddressForm';
 import Info from './Info';
@@ -48,22 +47,6 @@ export default function CheckoutPage() {
     state => state.updateHasVisitedCheckout,
   );
   const updateOrderResponse = useAuthStore(state => state.updateOrderResponse);
-
-  // Validate the token persisted on the client-side
-  React.useEffect(() => {
-    if (!token) {
-      return;
-    }
-
-    if (isTokenExpired(token)) {
-      console.error(
-        'You have been logged out because your bearer token has expired',
-      );
-      updateToken('');
-      navigate('/');
-      return;
-    }
-  }, [token, updateToken, navigate]);
 
   const { data: cartItems } = useQuery({
     queryKey: ['getCartsForCurrUser'],
