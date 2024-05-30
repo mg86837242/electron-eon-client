@@ -29,7 +29,6 @@ export default function useAuthentication() {
     }
   }, [token, updateToken]);
 
-  // FIX extract this hook after fixing the error propagation
   const { mutateAsync: loginMutate } = useMutation({
     mutationFn: loginUser,
     onSuccess: data => {
@@ -55,7 +54,6 @@ export default function useAuthentication() {
         // B/c the `onError` option of the `useMutation` is a callback func, errors are not considered as caught if
         // handled in the `onError` option, resulting in axios printing the error in the browser; therefore, this catch
         // block is needed
-        // FIX error needs to be caught in the component that invokes this handler, o/w axios gonna auto print error in the browser when giving invalid credentials
       }
     },
     [loginMutate],
