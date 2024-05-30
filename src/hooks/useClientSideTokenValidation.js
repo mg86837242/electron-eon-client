@@ -24,3 +24,5 @@ export default function useClientSideTokenValidation() {
     }
   }, [token, updateToken]);
 }
+
+// TODO there's currently no code implementation to immediately log out the user when the user tampers with, esp. deletes, token persisted in `localStorage`
