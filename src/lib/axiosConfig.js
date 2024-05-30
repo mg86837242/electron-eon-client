@@ -10,7 +10,9 @@ export const authApi = axios.create({
 
 authApi.interceptors.request.use(
   config => {
-    const token = useAuthStore.getState().token;
+    const token = window.localStorage.getItem(
+      `${import.meta.env.VITE_APP_NAME}-auth`,
+    )?.state?.token;
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
