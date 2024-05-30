@@ -17,8 +17,8 @@ export default function useAuthUser() {
     queryKey: ['getAuthUser', token],
     queryFn: () => getAuthUser(token),
     enabled: !!token && !isTokenExpired(token),
-    staleTime: Infinity,
-    gcTime: Infinity,
+    staleTime: 1_000 * 60 * 15,
+    gcTime: 1_000 * 60 * 60,
   });
 
   if (isError) {
