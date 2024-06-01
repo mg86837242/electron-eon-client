@@ -67,7 +67,7 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
-      // https://dev.to/julioxavierr/sorting-your-imports-with-eslint-3ped
+      // https://dev.to/julioxavierr/sorting-your-imports-with-eslint-3ped && `override` in flat config: https://eslint.org/docs/latest/use/configure/migration-guide#glob-based-configs
       'simple-import-sort/imports': [
         'warn',
         {
@@ -87,7 +87,6 @@ export default [
           ],
         },
       ],
-      'simple-import-sort/exports': 'warn',
       // customized:
       // `react/prop-types` is from `eslint-plugin-react`: https://github.com/jsx-eslint/eslint-plugin-react/issues/1966 && https://old.reddit.com/r/typescript/comments/12b1m46/is_it_ok_to_globally_disable_the_prop_types_rule/
       'react/prop-types': 'off',
