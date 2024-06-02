@@ -41,8 +41,6 @@ export default function CheckoutPage() {
   const navigate = useNavigate();
   const colorMode = useThemeStore(state => state.colorMode);
   const toggleColorMode = useThemeStore(state => state.toggleColorMode);
-  const token = useAuthStore(state => state.token);
-  const updateToken = useAuthStore(state => state.updateToken);
   const updateHasVisitedCheckout = useAuthStore(
     state => state.updateHasVisitedCheckout,
   );
