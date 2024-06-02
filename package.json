@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "lint": "eslint . --max-warnings 50",
     "lint:fix": "eslint . --max-warnings 50 --fix",
-    "prepare": "husky"
+    "prepare": "simple-git-hooks"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,json,css,md}": [
