@@ -11,6 +11,7 @@ export default function useClientSideTokenValidation() {
   // Validate the token persisted on the client-side
   React.useEffect(() => {
     if (!token) {
+      // For this case, navigation will be handled by <RequireAuth> i/o here
       return;
     }
 
