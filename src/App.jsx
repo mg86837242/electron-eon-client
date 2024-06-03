@@ -8,6 +8,8 @@ import queryClient from './lib/queryClientConfig';
 import { MuiThemeProvider } from './components';
 import router from './routes';
 
+import './App.css';
+
 export default function App() {
   useClientSideTokenValidation;
 
