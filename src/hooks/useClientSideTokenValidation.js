@@ -11,7 +11,9 @@ export default function useClientSideTokenValidation() {
   // Validate the token persisted on the client-side
   React.useEffect(() => {
     if (!token) {
-      // For this case, navigation will be handled by <RequireAuth> i/o here
+      // If there's no persisted token, then the user is a guest, and there's no
+      // need to redirect the guest user, b/c they'd be visiting a public route,
+      // a protected route (403/404) or a non-existent route (404)
       return;
     }
 
