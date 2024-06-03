@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import { useQuery } from '@tanstack/react-query';
 
 import { getOrderByIdForCurrUser } from '../api';
-import queryClient from '../lib/queryClientConfig';
 import useAuthStore from '../store/useAuthStore';
 import capFirst from '../utils/capFirst';
 

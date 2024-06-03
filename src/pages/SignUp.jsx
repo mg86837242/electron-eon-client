@@ -66,7 +66,7 @@ ControlledTextField.propTypes = {
 };
 
 export default function SignUp() {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false); // custom pending state for fake delay (`setTimeout`)
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
