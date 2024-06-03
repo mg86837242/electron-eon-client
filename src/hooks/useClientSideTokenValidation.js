@@ -15,10 +15,10 @@ export default function useClientSideTokenValidation() {
     }
 
     if (isTokenExpired(token)) {
+      updateToken('');
       console.error(
         'You have been logged out because your bearer token has expired',
       );
-      updateToken('');
       router.navigate('/');
       return;
     }

@@ -25,6 +25,9 @@ export default function useAuthUser() {
 
   if (isError) {
     updateToken('');
+    console.error(
+      'You have been logged out because your bearer token caused an error',
+    );
     router.navigate('/');
   }
 
