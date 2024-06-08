@@ -117,132 +117,132 @@ export default function SignUp() {
 
   return (
     <Container component='main' maxWidth='xs'>
+    <Box
+      sx={{
+        mt: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+        <LockOutlinedIcon />
+      </Avatar>
+      <Typography component='h1' variant='h5'>
+        Sign up
+      </Typography>
       <Box
+        component='form'
+        noValidate
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
-          mt: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          mt: 3,
+          '& .MuiTextField-root': {
+            mb: '8px',
+          },
+          '& .MuiInputBase-root': {
+            pt: '8px',
+            pb: '8px',
+          },
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component='h1' variant='h5'>
-          Sign up
-        </Typography>
-        <Box
-          component='form'
-          noValidate
-          onSubmit={handleSubmit(onSubmit)}
-          sx={{
-            mt: 3,
-            '& .MuiTextField-root': {
-              mb: '8px',
-            },
-            '& .MuiInputBase-root': {
-              pt: '8px',
-              pb: '8px',
-            },
-          }}
+        <Grid container spacing={2} justifyContent='center'>
+          <Grid item xs={12} sm={6}>
+            <ControlledTextField
+              name='firstName'
+              control={control}
+              label='First Name'
+              autoComplete='given-name'
+              autoFocus
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <ControlledTextField
+              name='lastName'
+              control={control}
+              label='Last Name'
+              autoComplete='family-name'
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <ControlledTextField
+              name='email'
+              control={control}
+              label='Email Address'
+              autoComplete='email'
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <ControlledTextField
+              name='password'
+              control={control}
+              label='Password'
+              type='password'
+              autoComplete='new-password'
+            />
+          </Grid>
+          <Grid xs={12}>
+            <FormControlLabel
+              sx={{
+                mr: 0,
+                // ??? For some reason, the following customization doesn't work, despite aligning with: https://mui.com/material-ui/customization/how-to-customize/#overriding-nested-component-styles
+                // '.MuiGrid-root > .MuiFormControlLabel-root': {
+                //   marginRight: 0,
+                // },
+              }}
+              control={<Checkbox value='allowExtraEmails' color='primary' />}
+              label='I want to receive inspiration, marketing promotions and updates via email.'
+            />
+          </Grid>
+          {isError && (
+            <Grid xs={12} display='flex' justifyContent='center'>
+              <Typography component='p' variant='body1' color='error.main'>
+                {registerError?.response?.data?.message ||
+                  'An error occurred'}
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
+        <LoadingButton
+          type='submit'
+          fullWidth
+          variant='contained'
+          sx={{ mt: 3, mb: 2 }}
+          loading={isLoading}
+          loadingIndicator='Pending...'
         >
-          <Grid container spacing={2} justifyContent='center'>
-            <Grid item xs={12} sm={6}>
-              <ControlledTextField
-                name='firstName'
-                control={control}
-                label='First Name'
-                autoComplete='given-name'
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <ControlledTextField
-                name='lastName'
-                control={control}
-                label='Last Name'
-                autoComplete='family-name'
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <ControlledTextField
-                name='email'
-                control={control}
-                label='Email Address'
-                autoComplete='email'
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <ControlledTextField
-                name='password'
-                control={control}
-                label='Password'
-                type='password'
-                autoComplete='new-password'
-              />
-            </Grid>
-            <Grid xs={12}>
-              <FormControlLabel
-                sx={{
-                  mr: 0,
-                  // ??? For some reason, the following customization doesn't work, despite aligning with: https://mui.com/material-ui/customization/how-to-customize/#overriding-nested-component-styles
-                  // '.MuiGrid-root > .MuiFormControlLabel-root': {
-                  //   marginRight: 0,
-                  // },
-                }}
-                control={<Checkbox value='allowExtraEmails' color='primary' />}
-                label='I want to receive inspiration, marketing promotions and updates via email.'
-              />
-            </Grid>
-            {isError && (
-              <Grid xs={12} display='flex' justifyContent='center'>
-                <Typography component='p' variant='body1' color='error.main'>
-                  {registerError?.response?.data?.message ||
-                    'An error occurred'}
-                </Typography>
-              </Grid>
-            )}
-          </Grid>
-          <LoadingButton
-            type='submit'
-            fullWidth
-            variant='contained'
-            sx={{ mt: 3, mb: 2 }}
-            loading={isLoading}
-            loadingIndicator='Pending...'
-          >
-            Sign Up
-          </LoadingButton>
-          <Snackbar
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            open={open}
-            autoHideDuration={5_000}
+          Sign Up
+        </LoadingButton>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={open}
+          autoHideDuration={5_000}
+          onClose={handleClose}
+        >
+          <Alert
             onClose={handleClose}
+            severity='success'
+            variant='filled'
+            sx={{ width: '100%' }}
           >
-            <Alert
-              onClose={handleClose}
-              severity='success'
-              variant='filled'
-              sx={{ width: '100%' }}
+            Registration successful
+          </Alert>
+        </Snackbar>
+        <Grid container justifyContent='flex-end'>
+          <Grid>
+            <Link
+              variant='body2'
+              // After redirecting to the login page, successful login will navigate the user to the landing page
+              onClick={() => navigate('/login')}
             >
-              Registration successful
-            </Alert>
-          </Snackbar>
-          <Grid container justifyContent='flex-end'>
-            <Grid>
-              <Link
-                variant='body2'
-                // After redirecting to the login page, successful login will navigate the user to the landing page
-                onClick={() => navigate('/login', { state: { from: '/' } })}
-              >
-                Already have an account? Sign in
-              </Link>
-            </Grid>
+              Already have an account? Sign in
+            </Link>
           </Grid>
-        </Box>
+        </Grid>
       </Box>
-      <AuthFooter sx={{ mt: 5 }} />
-    </Container>
+    </Box>
+    <AuthFooter sx={{ mt: 5 }} />
+  </Container>
   );
 }
 
