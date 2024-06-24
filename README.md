@@ -24,37 +24,36 @@ products, including smartphones, laptops, home appliances, and more.
 git clone https://github.com/mg86837242/electron-eon-server.git
 ```
 
-2. Create and modify `application.properties`
+2. Create `application.properties` then modify the following properties to match your MySQL Workbench local connection
 
 ```bash
 cd electron-eon-server
 cp src/main/resources/application.properties.example src/main/resources/application.properties
 ```
 
-Then modify the following properties to match your MySQL Workbench local connection
-
 ```
+# application.properties
 spring.datasource.username=********
 spring.datasource.password=********
 ```
 
-3. Start the Spring Boot application `src/main/java/dev/sy/ElectronEonApplication.java` by using such as Java IDE
+3. Follow the instructions of `src/main/resources/certs/README.md` to create keys for authentication
 
-4. Clone the server repo and resolve Maven dependencies as needed
+4. Start the Spring Boot application `src/main/java/dev/sy/ElectronEonApplication.java` by using such as Java IDE
+
+5. Clone the server repo and resolve Maven dependencies as needed
 
 ```bash
 git clone https://github.com/mg86837242/electron-eon-server.git
 ```
 
-5. Start the client
+6. Start the front-end server and follow the Vite prompts in the terminal to view the app in the browser
 
 ```bash
 cd electron-eon-client
 npm install
 npm run dev
 ```
-
-6. Follow the Vite prompts in the terminal and open up the browser
 
 ## 3.0 Overview of Technology Stack
 
