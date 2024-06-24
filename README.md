@@ -44,7 +44,7 @@ spring.datasource.password=********
 5. Clone the server repo and resolve Maven dependencies as needed
 
 ```bash
-git clone https://github.com/mg86837242/electron-eon-server.git
+git clone https://github.com/mg86837242/electron-eon-client.git
 ```
 
 6. Start the front-end server and follow the Vite prompts in the terminal to view the app in the browser
