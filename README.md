@@ -1,21 +1,62 @@
 # Electron Eon
 
-### 1.0 Project Description
+## 1.0 Project Description
 
 "Electron Eon" is a comprehensive web application designed to streamline the
 sales process for electronic goods. The primary objective of Electron Eon is to
 provide a one-stop destination for purchasing a wide range of electronic
 products, including smartphones, laptops, home appliances, and more.
 
-### 2.0 Usage
+## 2.0 Usage
 
-- Import database
-- Configure Java properties in back end
-- Spin up back end server
-- Spin up front end server
-- Navigate to the website
+### 2.1 Prerequisite
 
-### 3.0 Overview of Technology Stack
+1. MySQL Community Server and Workbench installed
+2. JDK Development Kit 21.0.3
+3. IDE for Java such as IntelliJ Community Edition
+4. IDE for JavaScript such as VS Code
+
+### 2.2 Steps
+
+1. Clone the server repo and resolve Maven dependencies as needed
+
+```bash
+git clone https://github.com/mg86837242/electron-eon-server.git
+```
+
+2. Create and modify `application.properties`
+
+```bash
+cd electron-eon-server
+cp src/main/resources/application.properties.example src/main/resources/application.properties
+```
+
+Then modify the following properties to match your MySQL Workbench local connection
+
+```
+spring.datasource.username=********
+spring.datasource.password=********
+```
+
+3. Start the Spring Boot application `src/main/java/dev/sy/ElectronEonApplication.java` by using such as Java IDE
+
+4. Clone the server repo and resolve Maven dependencies as needed
+
+```bash
+git clone https://github.com/mg86837242/electron-eon-server.git
+```
+
+5. Start the client
+
+```bash
+cd electron-eon-client
+npm install
+npm run dev
+```
+
+6. Follow the Vite prompts in the terminal and open up the browser
+
+## 3.0 Overview of Technology Stack
 
 - DBMS: MySQL
   - Reason: MySQL is both free and user-friendly. In addition, the developer
@@ -35,7 +76,7 @@ products, including smartphones, laptops, home appliances, and more.
     with this type of web architecture. Given the tight deadline for this
     project, both ease of use and familiarity are highly valued.
 
-### 4.0 Functional Requirements
+## 4.0 Functional Requirements
 
 - User Authentication and Authorization:
   - Users should be able to create an account, log in and log out.
@@ -80,7 +121,7 @@ products, including smartphones, laptops, home appliances, and more.
     - Users should be able to update their password.
     - Admins should be able to view, add, update and delete users.
 
-### 5.0 Technical Requirements
+## 5.0 Technical Requirements
 
 - Design and analysis:
   - Presentation slides
@@ -116,7 +157,7 @@ products, including smartphones, laptops, home appliances, and more.
 - Project management:
   - Retrospection - Sprint Retrospective
 
-### 6.0 Sprint Retrospectives
+## 6.0 Sprint Retrospectives
 
 - 29 Apr - 30 Apr
   - What went well?: project management documentation, project bootstrapping,
